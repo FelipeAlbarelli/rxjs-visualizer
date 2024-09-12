@@ -1,5 +1,8 @@
 <div class="container">
   @for (rxjsOperator of (rxjsOperators | async ); track rxjsOperator.name) {
-  <p>{{ rxjsOperator.name }}</p>
+  <app-rxjs-entity-card 
+    [name]="rxjsOperator.name"
+    [operatorType]="rxjsOperator.operatorType"
+  />
   }
 </div>

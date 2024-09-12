@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RxjsEntitiesService } from '../../rxjs/rxjs-entities.service';
+import { RxjsEntityCardComponent } from '../rxjs-entity-card/rxjs-entity-card.component';
 
 @Component({
   selector: 'app-side-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule , RxjsEntityCardComponent],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.css',
 })
