@@ -20,4 +20,8 @@ export class SideBarComponent implements OnInit {
       console.log(x);
     });
   }
+
+  log = (e: any) => {
+    console.log(e)
+  }
 }
