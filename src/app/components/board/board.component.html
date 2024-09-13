@@ -1,6 +1,6 @@
 <div 
     class="container"
-    (drop)="log($event, 'drop')"
-    (dragend)="log($event , 'dragend')"
+    (drop)="log($event, 'drop') ; onDrop($event)"
+    (dragenter)="log($event , 'dragenter')"
     (dragover)="onDrag($event)"
 ></div>

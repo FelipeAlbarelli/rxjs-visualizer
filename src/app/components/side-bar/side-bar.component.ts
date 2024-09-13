@@ -17,7 +17,7 @@ export class SideBarComponent implements OnInit {
 
   ngOnInit() {
     this.rxjsOperators.subscribe((x) => {
-      console.log(x);
+      // console.log(x);
     });
   }
 

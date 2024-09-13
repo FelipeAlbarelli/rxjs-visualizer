@@ -10,11 +10,14 @@ import { Component } from '@angular/core';
 export class BoardComponent {
 
   log = (e: any, tag?: string) => {
-    console.log(e)
-    console.log(tag)
   }
 
   onDrag = (e: Event) => {
     e.preventDefault()
+  }
+
+  onDrop = (e : DragEvent) => {
+    const { offsetX , offsetY} = e;
+    console.log(offsetX , offsetY)
   }
 }
