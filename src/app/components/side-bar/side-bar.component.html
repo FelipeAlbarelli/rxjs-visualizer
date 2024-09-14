@@ -1,7 +1,8 @@
-<div class="container" (dragstart)="log($event)">
+<div class="container">
   @for (rxjsOperator of (rxjsOperators | async ); track rxjsOperator.name) {
   <app-rxjs-entity-card
-    draggable="true"
+    dragMe
+    [dragPackage]="rxjsOperator"
     [name]="rxjsOperator.name"
     [operatorType]="rxjsOperator.operatorType"
   />

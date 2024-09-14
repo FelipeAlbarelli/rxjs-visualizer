@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { DropAreaDirective } from '../../drag-drop/drop-area.directive';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [],
+  imports: [DropAreaDirective],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })

@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 
 export type OperatorsTypes = 'creation' | 'filtering' | 'transformation';
 
-export interface RxjsEntity {
+export type RxjsEntity = {
   operatorType: OperatorsTypes;
   name: string;
 }
