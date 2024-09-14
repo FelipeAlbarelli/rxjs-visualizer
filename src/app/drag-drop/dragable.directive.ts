@@ -1,12 +1,8 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostBinding, HostListener, Input } from '@angular/core';
 
 @Directive({
   selector: '[dragMe]',
-  standalone: true,
-  host: {
-    'draggable' : 'true',
-    '(dragstart)' : 'onDragStart($event)'
-  }
+  standalone: true
 })
 export class DragableDirective {
 
@@ -15,6 +11,9 @@ export class DragableDirective {
   // use as key to apply partition on components
   @Input() dragMe : string = "*";
 
+  @HostBinding('attr.draggable') draggable = true;
+
+  @HostListener('dragstart' , ['$event']) 
   onDragStart(e: DragEvent) {
     console.log('*');
     console.log(e);
