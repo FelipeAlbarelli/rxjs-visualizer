@@ -1,5 +1,5 @@
 import { HostListener, Injectable } from '@angular/core';
-import { Observable, Subject, audit, delay, distinct, filter, fromEvent, map, mapTo, race, sample, startWith, switchMap, takeUntil, tap, toArray, withLatestFrom, zip } from 'rxjs';
+import { Observable, Subject, audit, delay, distinct, endWith, filter, fromEvent, map, mapTo, merge, race, sample, startWith, switchMap, takeUntil, tap, toArray, withLatestFrom, zip } from 'rxjs';
 
 export type DragDropData = {
   [key : string | number] : string | number | DragDropData
@@ -45,6 +45,8 @@ export class DragDropServiceService {
 
   public globalDropComplete$ = new Subject<DragDropEventInfo>();
 
+  public dragHover$ = new Subject<DragDropEventInfo>();
+
   dragCancelled$ = this.dragStart$.pipe(
     // Para cada dragStart$, começamos a observar dragEnd$ e dropComplete$
     switchMap(() => 
@@ -67,15 +69,18 @@ export class DragDropServiceService {
   );
 
 
-  constructor() {
-    this.dragCancelled$.subscribe(x => {
-      console.log({
-        dragCancelled : x
-      })
-    })
+  isDragging$ = merge(
+    this.dragHover$.pipe(map( val => true )),
+    this.dragEnd$.pipe(map( val => false))
+  ).pipe(
+    distinct( val => val)
+  )
 
-    // this.dragStart$.subscribe(x => console.log(x))
-    // this.globalDrop$.subscribe(x => console.log(x))
+  constructor() {
+
+    this.isDragging$.subscribe( x=> {
+      console.log( x )
+    })
 
   }
 }

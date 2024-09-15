@@ -41,7 +41,12 @@ export class DropAreaDirective {
   // mais um motivo para ultima flor do lácio >>> tio san language
   @HostListener('dragover' , ['$event']) 
   _onDragOver(e: DragEvent) {
-    e.preventDefault()
+    const coord = getDragEventCoordinates(e);
+    e.preventDefault();
+    this.dropService.dragHover$.next({
+      id: this.dropHere,
+      coord
+    })
     return;
     // console.log('drag over')
     // console.log(e)
