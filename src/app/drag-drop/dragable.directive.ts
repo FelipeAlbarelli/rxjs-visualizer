@@ -21,6 +21,12 @@ export class DragableDirective {
     this.dropService.dragStart$.next(this.dragData)
   }
 
+  @HostListener('dragend' , ['$event']) 
+  onDragEnd(e: DragEvent) {
+    // this.dropService.dragStart$.next(this.dragData)
+    this.dropService.dragEnd$.next()
+  }
+
   @HostBinding('style.cursor')
   cursor = 'grab';
 
