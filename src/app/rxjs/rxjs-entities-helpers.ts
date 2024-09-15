@@ -1,7 +1,7 @@
 import { DragDropData } from "../drag-drop/drag-drop-service.service";
 import { RxjsEntity, allOperatorsTypes } from "./rxjs-entities.service";
 
-export const isOperatorType = (toTest : string) => allOperatorsTypes.find(op => toTest)
+export const isOperatorType = (toTest : string) => allOperatorsTypes.find(op => toTest === op)
 
 export const getRxjsEntityFromDragData = (data: DragDropData) : RxjsEntity | null => {
     const operatorTypeCandidate = data['operatorType']
