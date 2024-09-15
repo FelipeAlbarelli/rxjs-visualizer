@@ -1,0 +1,18 @@
+<div class="container">
+    <div 
+        class="io drop"
+        dropHere="io"
+        (dropComplete)="receivedDrop($event)"
+    >
+    </div>
+    <ng-content></ng-content>
+    <div 
+        class="io drag"
+    >
+        <div  
+            dragMe="io"
+            [dragData]="dragDropData() ?? {}"
+            class="cicle"
+        ></div>
+    </div>
+</div>

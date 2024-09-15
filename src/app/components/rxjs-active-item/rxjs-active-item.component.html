@@ -1,5 +1,9 @@
-<app-rxjs-entity-card
-    [activated]="(ping$ | async) ?? false"
-    [name]="(textToDisplay$ | async) ?? '---'"
-    [operatorType]="item().operatorType"
-/>
+<app-draggable-arrow-wrapper
+    [dragDropData]="{uuid : uuid}"
+    >
+    <app-rxjs-entity-card
+        [activated]="(ping$ | async) ?? false"
+        [name]="(textToDisplay$ | async) ?? '---'"
+        [operatorType]="item().operatorType"
+    />
+</app-draggable-arrow-wrapper>

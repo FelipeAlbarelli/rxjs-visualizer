@@ -12,12 +12,17 @@ export class DragableDirective {
   // use as key to apply partition on components
   @Input() dragMe : string = "*";
 
+  @Input() dragType : 'copy' | 'move' = 'copy'
+
   @HostBinding('attr.draggable') draggable = true;
 
   @HostListener('dragstart' , ['$event']) 
   onDragStart(e: DragEvent) {
     this.dropService.dragStart$.next(this.dragData)
   }
+
+  @HostBinding('style.cursor')
+  cursor = 'grab';
 
   constructor(
     private el: ElementRef,

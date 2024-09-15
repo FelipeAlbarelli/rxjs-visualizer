@@ -6,15 +6,20 @@ import { CommonModule } from '@angular/common';
 import { OperatorsTypes } from '../../rxjs/rxjs-entities.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { BoardItem } from '../../board/board-state.service';
+import { DraggableArrowWrapperComponent } from '../draggable-arrow-wrapper/draggable-arrow-wrapper.component';
 
 @Component({
   selector: 'app-rxjs-active-item',
   standalone: true,
-  imports: [RxjsEntityCardComponent , CommonModule],
+  imports: [RxjsEntityCardComponent , CommonModule , DraggableArrowWrapperComponent],
   templateUrl: './rxjs-active-item.component.html',
   styleUrl: './rxjs-active-item.component.css'
 })
 export class RxjsActiveItemComponent  implements OnInit ,  OnDestroy {
+
+  static uuid = 0;
+
+  uuid : number;
 
   item = input.required<BoardItem>();
 
@@ -50,13 +55,12 @@ export class RxjsActiveItemComponent  implements OnInit ,  OnDestroy {
 
 
   constructor() {
+    this.uuid = RxjsActiveItemComponent.uuid;
+    RxjsActiveItemComponent.uuid += 1;
   }
 
   ngOnInit(): void {
-    this.baseObservable$.subscribe( (x) => {
-      console.log(x)
-    })
-    
+
   }
 
   ngOnDestroy(): void {
