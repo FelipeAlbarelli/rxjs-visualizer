@@ -19,4 +19,10 @@
     width: 12px;
     border-radius: 100%;
     background-color: darkblue;
+    z-index: 1;
+}
+
+.arrow-output {
+    position: absolute;
+    z-index: -1;
 }
