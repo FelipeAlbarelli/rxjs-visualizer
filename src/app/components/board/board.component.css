@@ -3,3 +3,9 @@
   height: 60vh;
   border: 2px solid black;
 }
+
+.item {
+  border: 1px solid blue;
+  width: 50px;
+  position: absolute;
+}

@@ -2,4 +2,12 @@
     class="container"
     dropHere
     (dropComplete)="onDrop($event)"
-></div>
+>
+    @for (item of items; track $index) {
+        <div 
+            class="item"
+            [style.top.px]="item.coord[1]"
+            [style.left.px]="item.coord[0]"
+        >{{item.name}}</div>
+    }
+</div>
