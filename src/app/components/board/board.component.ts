@@ -5,38 +5,38 @@ import { PlacedDirective } from '../../interactive-position/placed.directive';
 import { RxjsActiveItemComponent } from '../rxjs-active-item/rxjs-active-item.component';
 import { getRxjsEntityFromDragData } from '../../rxjs/rxjs-entities-helpers';
 import { OperatorsTypes } from '../../rxjs/rxjs-entities.service';
-
-type ItemsToDisplay = {
-  coord : Coord,
-  name : string,
-  operatorType: OperatorsTypes
-}
+import { BoardStateService } from '../../board/board-state.service';
+import { dropCompleteDataToBoardItem } from '../../board/board-helpers';
+import { CommonModule } from '@angular/common';
+import { startWith, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [DropAreaDirective , PlacedDirective , RxjsActiveItemComponent],
+  imports: [DropAreaDirective , PlacedDirective , RxjsActiveItemComponent , CommonModule ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })
 export class BoardComponent {
 
-  items : ItemsToDisplay[] = []
+  constructor(private boardStateService : BoardStateService) {
+    this.items$.subscribe( x => {
+      console.log(x)
+    })
+  }
+
+  items$ = this.boardStateService.allBoardItems$
+    
 
   log = (e: any) => {
     console.log(e)
   }
 
   onDrop = (data : DropCompletedDataInfo) => {
-    const {dropInfo , dragData} = data;
-    const rxjsEntity = getRxjsEntityFromDragData(dragData);
-    if (rxjsEntity === null) {
+    const boardItem = dropCompleteDataToBoardItem(data);
+    if (boardItem === null) {
       return
     }
-    this.items.push({
-      coord : dropInfo.coord.dict.page,
-      name : rxjsEntity.name,
-      operatorType : rxjsEntity.operatorType
-    })
+    this.boardStateService.addItem(boardItem)
   }
 }

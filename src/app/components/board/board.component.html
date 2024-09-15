@@ -1,9 +1,10 @@
+<h1>{{(items$ | async)?.length }}</h1>
 <div 
     class="container"
     dropHere
     (dropComplete)="onDrop($event)"
 >
-    @for (item of items; track $index) {
+    @for (item of (items$ | async); track $index) {
         <app-rxjs-active-item 
             [name]="item.name"
             [operatorType]="item.operatorType"
