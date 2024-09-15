@@ -1,10 +1,15 @@
 <div class="container">
-  @for (rxjsOperator of (rxjsOperators | async ); track rxjsOperator.name) {
-  <app-rxjs-entity-card
-    dragMe
-    [dragData]="rxjsOperator"
-    [name]="rxjsOperator.name"
-    [operatorType]="rxjsOperator.operatorType"
-  />
-  }
+  <div class="rxjs-cards-container">
+    @for (rxjsOperator of (rxjsOperators | async ); track rxjsOperator.name) {
+    <app-rxjs-entity-card
+      dragMe
+      [dragData]="rxjsOperator"
+      [name]="rxjsOperator.name"
+      [operatorType]="rxjsOperator.operatorType"
+    />
+    }
+  </div>
+  <button
+    (click)="reset()"
+  >reset</button>
 </div>

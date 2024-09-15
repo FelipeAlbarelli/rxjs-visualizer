@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RxjsEntitiesService } from '../../rxjs/rxjs-entities.service';
 import { RxjsEntityCardComponent } from '../rxjs-entity-card/rxjs-entity-card.component';
 import { DragableDirective } from '../../drag-drop/dragable.directive';
+import { BoardStateService } from '../../board/board-state.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -12,14 +13,18 @@ import { DragableDirective } from '../../drag-drop/dragable.directive';
   styleUrl: './side-bar.component.css',
 })
 export class SideBarComponent implements OnInit {
-  constructor(protected rxjsService: RxjsEntitiesService) {}
+  constructor(
+    protected rxjsService: RxjsEntitiesService,
+    protected boardService : BoardStateService  
+  ) {}
 
   rxjsOperators = this.rxjsService.allOperators;
 
   ngOnInit() {
-    this.rxjsOperators.subscribe((x) => {
-      // console.log(x);
-    });
+  }
+
+  reset = () => {
+    this.boardService.clear();
   }
 
   log = (e: any) => {
