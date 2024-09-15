@@ -25,14 +25,14 @@ export class RxjsActiveItemComponent  implements OnInit ,  OnDestroy {
   baseObservable$ = ObservableFactory(this.item$)
 
 
-  delayedInternalSubject = this.baseObservable$.pipe(
+  delayedInternalSubject$ = this.baseObservable$.pipe(
     delay(100)
   )
 
   // true for 100 in every internalSubject tick
-  ping = merge(
+  ping$ = merge(
     this.baseObservable$.pipe(map( () => true)),
-    this.delayedInternalSubject.pipe(map( () => false))
+    this.delayedInternalSubject$.pipe(map( () => false))
   ).pipe(
     startWith(false)
   )
