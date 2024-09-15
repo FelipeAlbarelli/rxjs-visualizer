@@ -1,8 +1,14 @@
 .container {
     border: solid 1px;
     padding: 20px;
+    transition: all 0.1s;
 }
+.active {
+    /* border : solid 4px; */
+    /* transform: scale(1.05); */
 
+    filter: brightness(125%);
+}
 .transformation {
     border-color: blue;
     background-color: color-mix(in srgb, blue 50%, white 50%);
@@ -19,3 +25,4 @@
     border-color: green;
     background-color: color-mix(in srgb, green 50%, white 50%);
 }
+

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input, input } from '@angular/core';
 import { OperatorsTypes, RxjsEntity } from '../../rxjs/rxjs-entities.service';
 
 @Component({
@@ -9,6 +9,9 @@ import { OperatorsTypes, RxjsEntity } from '../../rxjs/rxjs-entities.service';
   styleUrl: './rxjs-entity-card.component.css',
 })
 export class RxjsEntityCardComponent {
-  @Input({ required: true }) name!: string;
-  @Input({ required: true }) operatorType!: OperatorsTypes;
+  name = input.required<string>()
+  operatorType = input.required<OperatorsTypes>()
+
+  // apply css style 
+  activated = input(false);
 }
