@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, HostListener, OnDestroy, OnInit, input } from '@angular/core';
+import { Directive, ElementRef, HostBinding, HostListener, NgZone, OnDestroy, OnInit, computed, effect, input, signal } from '@angular/core';
 import { Coord } from '../drag-drop/drag-drop-service.service';
 import { fromEvent } from 'rxjs';
 
@@ -8,31 +8,38 @@ import { fromEvent } from 'rxjs';
 })
 export class PlacedDirective implements OnInit , OnDestroy  {
 
+  width  = signal(0);
+  height = signal(0); 
+
+  resizeObserver = new ResizeObserver( entries => {
+      const width = entries[0].borderBoxSize[0].inlineSize;
+      const height = entries[0].borderBoxSize[0].blockSize;
+      this.width.set(width);
+      this.height.set(height)
+  });
+
   placedItem = input.required<Coord>();
+
+  calculatedTopDistance = computed( () => {
+    return this.placedItem()[1] - (this.height() / 2);
+  })
+
+  calculatedLeftDistance = computed( () => {
+    return this.placedItem()[0] - (this.width() /2);
+  })
 
   @HostBinding('style.top.px') 
   get top() {
-    return this.placedItem()[1]
+    return this.calculatedTopDistance();
   }
   
   @HostBinding('style.left.px')
   get left() {
-    return this.placedItem()[0]
+    return this.calculatedLeftDistance()
   }
 
   @HostBinding('style.position')
   position = 'absolute';
-
-  width  = 0;
-  height = 0; 
-
-  resizeObserver = new ResizeObserver( entries => {
-    const width = entries[0].borderBoxSize[0].inlineSize;
-    const height = entries[0].borderBoxSize[0].blockSize;
-    this.width  = width;
-    this.height = height
-    console.log(this.width , this.height)
-  });
 
   ngOnInit(): void {
     this.resizeObserver.observe(this.el.nativeElement)
@@ -42,9 +49,9 @@ export class PlacedDirective implements OnInit , OnDestroy  {
     this.resizeObserver.disconnect();
   }
 
-  constructor(private el: ElementRef<HTMLElement> ) {
-    // this.el.nativeElement.addEventListener('resize')
-    
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    ) {
   }
 
 }
