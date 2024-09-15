@@ -6,6 +6,5 @@
 
 .item {
   border: 1px solid blue;
-  width: 50px;
-  position: absolute;
+  width: 10%;
 }

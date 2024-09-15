@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DropAreaDirective } from '../../drag-drop/drop-area.directive';
 import { Coord, DragDropData, DropCompletedDataInfo, DropInfo } from '../../drag-drop/drag-drop-service.service';
+import { PlacedDirective } from '../../interactive-position/placed.directive';
 
 type ItemsToDisplay = {
   coord : Coord,
@@ -10,7 +11,7 @@ type ItemsToDisplay = {
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [DropAreaDirective],
+  imports: [DropAreaDirective , PlacedDirective],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css'
 })
