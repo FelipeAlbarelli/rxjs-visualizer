@@ -4,9 +4,10 @@
     (dropComplete)="onDrop($event)"
 >
     @for (item of items; track $index) {
-        <div 
+        <app-rxjs-active-item 
+            [name]="item.name"
+            [operatorType]="item.operatorType"
             [placedItem]="item.coord"
-            class="item"
-        >{{item.name}}</div>
+        />
     }
 </div>

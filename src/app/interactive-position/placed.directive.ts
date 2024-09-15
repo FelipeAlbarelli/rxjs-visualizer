@@ -1,6 +1,5 @@
 import { Directive, ElementRef, HostBinding, HostListener, NgZone, OnDestroy, OnInit, computed, effect, input, signal } from '@angular/core';
 import { Coord } from '../drag-drop/drag-drop-service.service';
-import { fromEvent } from 'rxjs';
 
 @Directive({
   selector: '[placedItem]',

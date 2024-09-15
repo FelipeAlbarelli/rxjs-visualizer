@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 
-export type OperatorsTypes = 'creation' | 'filtering' | 'transformation';
+export const allOperatorsTypes = [
+  'creation' , 
+  'filtering',
+  'transformation'
+] as const 
+
+export type OperatorsTypes = (typeof allOperatorsTypes)[number];
 
 export type RxjsEntity = {
   operatorType: OperatorsTypes;
