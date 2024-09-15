@@ -1,4 +1,5 @@
 import { Directive, ElementRef, HostBinding, HostListener, Input } from '@angular/core';
+import { DragDropData, DragDropServiceService } from './drag-drop-service.service';
 
 @Directive({
   selector: '[dragMe]',
@@ -6,7 +7,7 @@ import { Directive, ElementRef, HostBinding, HostListener, Input } from '@angula
 })
 export class DragableDirective {
 
-  @Input() dragPackage : Record<string, number | string | null> = {};
+  @Input() dragData : DragDropData = {};
 
   // use as key to apply partition on components
   @Input() dragMe : string = "*";
@@ -15,14 +16,13 @@ export class DragableDirective {
 
   @HostListener('dragstart' , ['$event']) 
   onDragStart(e: DragEvent) {
-    console.log('*');
-    console.log(e);
-    console.log(this.dragPackage);
-    e.dataTransfer?.setData('text/plain' , JSON.stringify(this.dragPackage) )
+    this.dropService.dragStart$.next(this.dragData)
   }
 
-  constructor(private el: ElementRef) {
-    this.el.nativeElement.attributes
+  constructor(
+    private el: ElementRef,
+    private dropService : DragDropServiceService
+    ) {
   }
 
 }

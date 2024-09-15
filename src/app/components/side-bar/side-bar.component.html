@@ -2,7 +2,7 @@
   @for (rxjsOperator of (rxjsOperators | async ); track rxjsOperator.name) {
   <app-rxjs-entity-card
     dragMe
-    [dragPackage]="rxjsOperator"
+    [dragData]="rxjsOperator"
     [name]="rxjsOperator.name"
     [operatorType]="rxjsOperator.operatorType"
   />
