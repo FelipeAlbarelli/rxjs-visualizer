@@ -6,9 +6,8 @@
 >
     @for (item of (items$ | async); track $index) {
         <app-rxjs-active-item 
-            [name]="item.name"
-            [operatorType]="item.operatorType"
             [placedItem]="item.coord"
+            [item]="item"
         />
     }
 </div>

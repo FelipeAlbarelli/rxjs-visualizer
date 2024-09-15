@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit, computed, input } from '@angular/core';
 import { RxjsEntityCardComponent } from '../rxjs-entity-card/rxjs-entity-card.component';
 import { Subject, delay, map, merge, startWith, takeUntil, tap } from 'rxjs';
-import { geRxjsFromRxjsEntity } from '../../rxjs/create-rxjs-objs';
+import { ObservableFactory, geRxjsFromRxjsEntity } from '../../rxjs/create-rxjs-objs';
 import { CommonModule } from '@angular/common';
 import { OperatorsTypes } from '../../rxjs/rxjs-entities.service';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { BoardItem } from '../../board/board-state.service';
 
 @Component({
   selector: 'app-rxjs-active-item',
@@ -14,47 +16,35 @@ import { OperatorsTypes } from '../../rxjs/rxjs-entities.service';
 })
 export class RxjsActiveItemComponent  implements OnInit ,  OnDestroy {
 
-  name = input.required<string>()
-  operatorType = input.required<OperatorsTypes>()
+  item = input.required<BoardItem>();
 
-  private destroy$ = new Subject<void>();
+  item$ = toObservable(this.item);
 
-  internalSubject = new Subject();
+  destroy$ = new Subject<void>();
 
-  delayedInternalSubject = this.internalSubject.pipe(
+  baseObservable$ = ObservableFactory(this.item$)
+
+
+  delayedInternalSubject = this.baseObservable$.pipe(
     delay(100)
   )
 
   // true for 100 in every internalSubject tick
   ping = merge(
-    this.internalSubject.pipe(map( () => true)),
+    this.baseObservable$.pipe(map( () => true)),
     this.delayedInternalSubject.pipe(map( () => false))
   ).pipe(
     startWith(false)
   )
 
-  baseObservable = computed( () => {
-    return geRxjsFromRxjsEntity({
-      name: this.name(),
-      operatorType: this.operatorType()
-    })?.pipe(
-      takeUntil(this.destroy$)
-    )
-  })
 
   constructor() {
-    this.internalSubject.subscribe( x => {
-      // console.log(x)
-    })
-
-    this.ping.subscribe(x => {
-      // console.log(x)
-    })
-
   }
 
   ngOnInit(): void {
-    this.baseObservable()?.subscribe(this.internalSubject)
+    this.baseObservable$.subscribe( (x) => {
+      console.log(x)
+    })
     
   }
 

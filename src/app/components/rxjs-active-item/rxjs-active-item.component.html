@@ -1,5 +1,5 @@
 <app-rxjs-entity-card
     [activated]="(ping | async) ?? false"
-    [name]="name()"
-    [operatorType]="operatorType()"
+    [name]="item().name"
+    [operatorType]="item().operatorType"
 />
