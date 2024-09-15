@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DropAreaDirective } from '../../drag-drop/drop-area.directive';
-import { DragDropData } from '../../drag-drop/drag-drop-service.service';
+import { DragDropData, DropCompletedDataInfo, DropInfo } from '../../drag-drop/drag-drop-service.service';
 
 @Component({
   selector: 'app-board',
@@ -14,7 +14,7 @@ export class BoardComponent {
   log = (e: any, tag?: string) => {
   }
 
-  onDrop = (data : DragDropData) => {
+  onDrop = (data : DropCompletedDataInfo) => {
     console.log(data);
   }
 }

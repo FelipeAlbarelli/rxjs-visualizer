@@ -1,7 +1,8 @@
 import { Directive, HostListener, Input  } from '@angular/core';
 import { outputFromObservable } from '@angular/core/rxjs-interop'
-import { DragDropServiceService } from './drag-drop-service.service';
-import { Subject, sample } from 'rxjs';
+import { DragDropServiceService, DropInfo } from './drag-drop-service.service';
+import { Subject, combineLatest, map, sample, withLatestFrom, zip } from 'rxjs';
+import { getDragEventCoordinates } from './drag-drop-helpers';
 
 @Directive({
   selector: '[dropHere]',
@@ -12,19 +13,26 @@ export class DropAreaDirective {
   @Input()
   dropHere = '*';
 
-  droppedHere$ = new Subject<string>();
+  droppedHere$ = new Subject<DropInfo>();
 
   @HostListener('drop' , ['$event']) 
   _onDrop(e : DragEvent) {
     // this.dropService.drop$.next(this.dropHere);
-    this.droppedHere$.next(this.dropHere);
+    const coord = getDragEventCoordinates(e);
+    this.droppedHere$.next({
+      id : this.dropHere,
+      coord
+    });
   }
 
-  dropCompleted$ = this.dropService.dragStart$.pipe(
-    sample(this.droppedHere$)
+  dropCompleted2$ = this.droppedHere$.pipe(
+    withLatestFrom(this.dropService.dragStart$),
+    map( ([dropInfo , dragData]) => ({
+        dragData , dropInfo
+    }))
   )
 
-  dropComplete = outputFromObservable(this.dropCompleted$);
+  dropComplete = outputFromObservable(this.dropCompleted2$);
 
   // TW : Ambiguidade >:(  !!!!
   // Drag Over não é "acabou o drag event", é "o drag está over/sobre aqui"
