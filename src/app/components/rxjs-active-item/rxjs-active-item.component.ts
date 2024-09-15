@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, computed, input } from '@angular/core';
 import { RxjsEntityCardComponent } from '../rxjs-entity-card/rxjs-entity-card.component';
-import { Subject, delay, map, merge, startWith, takeUntil, tap } from 'rxjs';
+import { Subject, combineLatest, delay, map, merge, startWith, takeUntil, tap, zip } from 'rxjs';
 import { ObservableFactory, geRxjsFromRxjsEntity } from '../../rxjs/create-rxjs-objs';
 import { CommonModule } from '@angular/common';
 import { OperatorsTypes } from '../../rxjs/rxjs-entities.service';
@@ -23,6 +23,10 @@ export class RxjsActiveItemComponent  implements OnInit ,  OnDestroy {
   destroy$ = new Subject<void>();
 
   baseObservable$ = ObservableFactory(this.item$)
+  .pipe(
+    map( x => x + 1 ),
+    startWith(0)
+  )
 
 
   delayedInternalSubject$ = this.baseObservable$.pipe(
@@ -36,6 +40,13 @@ export class RxjsActiveItemComponent  implements OnInit ,  OnDestroy {
   ).pipe(
     startWith(false)
   )
+
+  textToDisplay$ = combineLatest([
+    this.item$.pipe(map( item => item.name)),
+    this.baseObservable$
+  ]).pipe(
+    map( ([name , value]) => `${name} : ${value}`)
+    )
 
 
   constructor() {
