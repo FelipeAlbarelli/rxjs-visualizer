@@ -7,7 +7,7 @@ export type DragDropData = {
 
 export type Coord = [number , number]
 
-export type DropInfo = {
+export type DragDropEventInfo = {
   id : string,
   coord : {
     list : Coord[],
@@ -22,9 +22,15 @@ export type DropInfo = {
   }
 }
 
+export type DragStartInfo = {
+  data: DragDropData,
+  eventInfo : DragDropEventInfo,
+}
+
 export type DropCompletedDataInfo = {
-  dragData : DragDropData,
-  dropInfo : DropInfo
+  start: DragDropEventInfo,
+  end:   DragDropEventInfo,
+  data: DragDropData
 }
 
 
@@ -33,17 +39,17 @@ export type DropCompletedDataInfo = {
 })
 export class DragDropServiceService {
 
-  public dragStart$ = new Subject<DragDropData>();
+  public dragStart$ = new Subject<DragStartInfo>();
 
   public dragEnd$ = new Subject<void>();
 
-  public globalDrop$ = new Subject<DropInfo>();
+  public globalDropComplete$ = new Subject<DragDropEventInfo>();
 
   dragCancelled$ = this.dragStart$.pipe(
     // Para cada dragStart$, começamos a observar dragEnd$ e dropComplete$
     switchMap(() => 
       race(
-        this.globalDrop$.pipe(
+        this.globalDropComplete$.pipe(
           // Quando dropComplete$ emite, o drag foi bem-sucedido, então ignoramos
           map(() => false)
         ),

@@ -1,4 +1,4 @@
-import { Coord, DropInfo } from "./drag-drop-service.service";
+import { Coord, DragDropEventInfo } from "./drag-drop-service.service";
 
 export const isCoord = (toTest : any) => {
     if (!Array.isArray(toTest)) {
@@ -14,7 +14,7 @@ export const isCoord = (toTest : any) => {
     return [x, y] as [number , number]
 }
 
-export const getDragEventCoordinates = ( e: DragEvent ) : DropInfo['coord'] => {
+export const getDragEventCoordinates = ( e: DragEvent ) : DragDropEventInfo['coord'] => {
     const {
         x, y , clientX , clientY , layerX , layerY , pageX , pageY ,offsetX , offsetY , screenX , screenY
     } = e;
@@ -26,7 +26,7 @@ export const getDragEventCoordinates = ( e: DragEvent ) : DropInfo['coord'] => {
         [offsetX , offsetY],
         [screenX , screenY]
     ];
-    const dict : DropInfo['coord']['dict'] = {
+    const dict : DragDropEventInfo['coord']['dict'] = {
         xy : [x,y],
         client : [clientX , clientY],
         layer : [layerX , layerY],

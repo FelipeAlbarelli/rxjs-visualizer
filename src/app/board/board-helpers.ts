@@ -28,13 +28,13 @@ export const verifyIsBoardItem = (x : any) => {
 }
 
 export const dropCompleteDataToBoardItem = (dropCompleteData : DropCompletedDataInfo) => {
-    const {dragData,dropInfo} = dropCompleteData;
-    const rxjsEntity = getRxjsEntityFromDragData(dragData);
+    const { data ,end ,start } = dropCompleteData;
+    const rxjsEntity = getRxjsEntityFromDragData(data);
     if (rxjsEntity === null) {
         return null
     }
     return {
-        coord : dropInfo.coord.dict.page,
+        coord : end.coord.dict.page,
         name : rxjsEntity.name,
         operatorType : rxjsEntity.operatorType
     }

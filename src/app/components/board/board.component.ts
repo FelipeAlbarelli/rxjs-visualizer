@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import { DropAreaDirective } from '../../drag-drop/drop-area.directive';
-import { Coord, DragDropData, DropCompletedDataInfo, DropInfo } from '../../drag-drop/drag-drop-service.service';
+import { DropCompletedDataInfo } from '../../drag-drop/drag-drop-service.service';
 import { PlacedDirective } from '../../interactive-position/placed.directive';
 import { RxjsActiveItemComponent } from '../rxjs-active-item/rxjs-active-item.component';
-import { getRxjsEntityFromDragData } from '../../rxjs/rxjs-entities-helpers';
-import { OperatorsTypes } from '../../rxjs/rxjs-entities.service';
 import { BoardStateService } from '../../board/board-state.service';
 import { dropCompleteDataToBoardItem } from '../../board/board-helpers';
 import { CommonModule } from '@angular/common';
-import { startWith, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-board',

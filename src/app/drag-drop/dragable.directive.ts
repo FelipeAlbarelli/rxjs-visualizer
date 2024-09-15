@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostBinding, HostListener, Input } from '@angular/core';
 import { DragDropData, DragDropServiceService } from './drag-drop-service.service';
+import { getDragEventCoordinates } from './drag-drop-helpers';
 
 @Directive({
   selector: '[dragMe]',
@@ -18,7 +19,14 @@ export class DragableDirective {
 
   @HostListener('dragstart' , ['$event']) 
   onDragStart(e: DragEvent) {
-    this.dropService.dragStart$.next(this.dragData)
+    const coord = getDragEventCoordinates(e);
+    this.dropService.dragStart$.next({
+      data: this.dragData,
+      eventInfo : {
+        coord,
+        id: this.dragMe
+      }
+    })
   }
 
   @HostListener('dragend' , ['$event']) 
