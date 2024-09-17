@@ -9,8 +9,11 @@
     <div 
         class="io drag"
     >
+        {{(to$ | async)?.at(0) }} {{(to$ | async)?.at(1) }} 
         <app-arrow-svg 
             class="arrow-output"
+            [from]="(from$ | async) ?? undefined"
+            [to]="(to$ | async) ?? undefined"
         />
         <div  
             dragMe="io"

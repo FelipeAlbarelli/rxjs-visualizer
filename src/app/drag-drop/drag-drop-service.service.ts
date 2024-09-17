@@ -75,13 +75,14 @@ export class DragDropServiceService {
       ),
     ),
     distinctUntilChanged()
-  )
+  );
+
+  dragFromStartToCurrentHover$ = this.dragHover$.pipe(
+    withLatestFrom(this.dragStart$),
+    map( ([hover , start]) => ({hover, start})),
+  );
   
   constructor() {
-
-    this.isDragging$.subscribe( x=> {
-      console.log( x )
-    })
 
   }
 }
