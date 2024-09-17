@@ -1,5 +1,5 @@
 import { HostListener, Injectable } from '@angular/core';
-import { Observable, Subject, audit, delay, distinct, endWith, filter, fromEvent, map, mapTo, merge, race, sample, startWith, switchMap, takeUntil, tap, toArray, withLatestFrom, zip } from 'rxjs';
+import { Observable, Subject, audit, delay, distinct, distinctUntilChanged, endWith, filter, fromEvent, map, mapTo, merge, mergeWith, race, sample, startWith, switchMap, takeUntil, tap, toArray, withLatestFrom, zip } from 'rxjs';
 
 export type DragDropData = {
   [key : string | number] : string | number | DragDropData
@@ -68,14 +68,15 @@ export class DragDropServiceService {
     )
   );
 
-
-  isDragging$ = merge(
-    this.dragHover$.pipe(map( val => true )),
-    this.dragEnd$.pipe(map( val => false))
-  ).pipe(
-    distinct( val => val)
+  isDragging$ = this.dragHover$.pipe(
+    map( _ => true),
+    mergeWith( this.dragEnd$.pipe(
+        map( _ => false )
+      ),
+    ),
+    distinctUntilChanged()
   )
-
+  
   constructor() {
 
     this.isDragging$.subscribe( x=> {
